@@ -1,6 +1,25 @@
 #!/usr/bin/env node
 
 /**
+ * Initialize Application Insights if connection string is provided
+ */
+if (process.env.APPLICATIONINSIGHTS_CONNECTION_STRING) {
+  const appInsights = require('applicationinsights');
+  appInsights.setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
+    .setAutoDependencyCorrelation(true)
+    .setAutoCollectRequests(true)
+    .setAutoCollectPerformance(true, true)
+    .setAutoCollectExceptions(true)
+    .setAutoCollectDependencies(true)
+    .setAutoCollectConsole(true)
+    .setUseDiskRetryCaching(true)
+    .setSendLiveMetrics(false)
+    .start();
+  
+  console.log('Application Insights initialized with connection string');
+}
+
+/**
  * Module dependencies.
  */
 
